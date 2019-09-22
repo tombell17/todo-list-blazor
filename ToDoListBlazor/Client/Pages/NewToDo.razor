@@ -1,0 +1,38 @@
+﻿@page "/new"
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@using ToDoListBlazor.Shared
+
+
+<h1>New To Do:</h1>
+<p>Fill the fields bellow to add a new To Do!</p>
+
+<EditForm Model="@newToDo" OnValidSubmit="@HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <p>
+        Title <InputText id="Title" @bind-Value="@newToDo.Title" /> <br><br>
+        Description <InputText id="description" @bind-Value="@newToDo.Description" /><br>
+    </p>
+
+    <button type="submit">Create</button>
+</EditForm>
+
+@code {
+    private ToDo newToDo = new ToDo();
+
+    private async Task HandleValidSubmit()
+    {
+        //Completar los Datos que se generan automaticamente
+        newToDo.CreatedDateTime = DateTime.Now;
+        newToDo.IsFinished = false;
+
+        //Enviar al servidor el nuevo ToDo
+        await Http.PostJsonAsync<ToDo>("ToDo", newToDo);
+
+
+        //Redireccionar a la lista.
+        NavigationManager.NavigateTo("/");
+    }
+}
