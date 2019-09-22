@@ -23,16 +23,12 @@
     private ToDo newToDo = new ToDo();
 
     private async Task HandleValidSubmit()
-    {
-        //Completar los Datos que se generan automaticamente
+    {        
         newToDo.CreatedDateTime = DateTime.Now;
         newToDo.IsFinished = false;
-
-        //Enviar al servidor el nuevo ToDo
-        await Http.PostJsonAsync<ToDo>("ToDo", newToDo);
-
-
-        //Redireccionar a la lista.
+        
+        await Http.PostJsonAsync("ToDo", newToDo);
+        
         NavigationManager.NavigateTo("/");
     }
 }

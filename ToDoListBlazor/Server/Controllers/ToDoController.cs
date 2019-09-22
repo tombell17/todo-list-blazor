@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using ToDoListBlazor.Server.Abstractions;
 using ToDoListBlazor.Shared;
 
@@ -19,7 +20,13 @@ namespace ToDoListBlazor.Server.Controllers
         {
             _toDoRepository.Create(newToDo);
 
-            return Json("{}");
+            return Ok();
         }        
+
+        [HttpGet]
+        public IEnumerable<ToDo> Get()
+        {
+            return _toDoRepository.GetAll();
+        }
     }
 }
