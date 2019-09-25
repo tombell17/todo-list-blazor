@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\ToDoListBlazor.Domain.Shared.csproj" />
+    <ProjectReference Include="..\ToDoListBlazor.Shared\ToDoListBlazor.Domain.Shared.csproj" />
   </ItemGroup>
 
 </Project>
