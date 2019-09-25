@@ -12,7 +12,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Client\ToDoListBlazor.Client.csproj" />
-    <ProjectReference Include="..\Shared\ToDoListBlazor.Shared.csproj" />
+    <ProjectReference Include="..\Shared\ToDoListBlazor.Domain.Shared.csproj" />
+    <ProjectReference Include="..\ToDoListBlazor.Domain\ToDoListBlazor.Domain.csproj" />
+    <ProjectReference Include="..\ToDoListBlazor.IoC\ToDoListBlazor.IoC.csproj" />
   </ItemGroup>
 
 </Project>

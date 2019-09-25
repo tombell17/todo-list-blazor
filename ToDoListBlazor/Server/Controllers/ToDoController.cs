@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using ToDoListBlazor.Server.Abstractions;
+using ToDoListBlazor.Domain;
 using ToDoListBlazor.Shared;
 
 namespace ToDoListBlazor.Server.Controllers

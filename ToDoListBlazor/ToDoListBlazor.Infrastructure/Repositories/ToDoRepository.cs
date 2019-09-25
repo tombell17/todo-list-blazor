@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using ToDoListBlazor.Server.Abstractions;
+using ToDoListBlazor.Domain;
 using ToDoListBlazor.Shared;
 
-namespace ToDoListBlazor.Server.Repositories
+namespace ToDoListBlazor.Infrastructure
 {
     public class ToDoRepository : IToDoRepository
     {

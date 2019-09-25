@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using ToDoListBlazor.Shared;
 
-namespace ToDoListBlazor.Server.Abstractions
+namespace ToDoListBlazor.Domain
 {
     public interface IToDoRepository
     {

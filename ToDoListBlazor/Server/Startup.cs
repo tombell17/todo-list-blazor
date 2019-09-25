@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json.Serialization;
 using System.Linq;
-using ToDoListBlazor.Server.Abstractions;
-using ToDoListBlazor.Server.Repositories;
+using ToDoListBlazor.Domain;
+using ToDoListBlazor.Infrastructure;
+using ToDoListBlazor.IoC;
 
 namespace ToDoListBlazor.Server
 {
@@ -17,7 +17,9 @@ namespace ToDoListBlazor.Server
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddNewtonsoftJson();
-            services.AddSingleton<IToDoRepository, ToDoRepository>();
+            
+            ApplicationModule.BindApplicationModules(services);
+            
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(

@@ -3,11 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29311.281
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListBlazor.Server", "Server\ToDoListBlazor.Server.csproj", "{B68A89BE-86A1-47DE-89F3-39C0926EEB5A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListBlazor.Server", "Server\ToDoListBlazor.Server.csproj", "{B68A89BE-86A1-47DE-89F3-39C0926EEB5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListBlazor.Client", "Client\ToDoListBlazor.Client.csproj", "{F5F8E55B-DB11-4E09-8E9B-E2E1CC0E2111}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListBlazor.Client", "Client\ToDoListBlazor.Client.csproj", "{F5F8E55B-DB11-4E09-8E9B-E2E1CC0E2111}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListBlazor.Shared", "Shared\ToDoListBlazor.Shared.csproj", "{DE651C37-9076-4CF9-8064-247DEB343905}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListBlazor.Domain.Shared", "Shared\ToDoListBlazor.Domain.Shared.csproj", "{DE651C37-9076-4CF9-8064-247DEB343905}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListBlazor.Domain", "ToDoListBlazor.Domain\ToDoListBlazor.Domain.csproj", "{7BB4479D-2627-4C01-9EB3-CDD1F0FCD268}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListBlazor.Infrastructure", "ToDoListBlazor.Infrastructure\ToDoListBlazor.Infrastructure.csproj", "{F0D146FD-801C-49F7-8809-E802296200C0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListBlazor.IoC", "ToDoListBlazor.IoC\ToDoListBlazor.IoC.csproj", "{3DB66C58-B57F-40AA-A6D5-AB583536E98F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +33,18 @@ Global
 		{DE651C37-9076-4CF9-8064-247DEB343905}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE651C37-9076-4CF9-8064-247DEB343905}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE651C37-9076-4CF9-8064-247DEB343905}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7BB4479D-2627-4C01-9EB3-CDD1F0FCD268}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7BB4479D-2627-4C01-9EB3-CDD1F0FCD268}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7BB4479D-2627-4C01-9EB3-CDD1F0FCD268}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7BB4479D-2627-4C01-9EB3-CDD1F0FCD268}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0D146FD-801C-49F7-8809-E802296200C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0D146FD-801C-49F7-8809-E802296200C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0D146FD-801C-49F7-8809-E802296200C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0D146FD-801C-49F7-8809-E802296200C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3DB66C58-B57F-40AA-A6D5-AB583536E98F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3DB66C58-B57F-40AA-A6D5-AB583536E98F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3DB66C58-B57F-40AA-A6D5-AB583536E98F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3DB66C58-B57F-40AA-A6D5-AB583536E98F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
