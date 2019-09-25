@@ -5,12 +5,12 @@ using ToDoListBlazor.Shared;
 
 namespace ToDoListBlazor.Infrastructure
 {
-    public class ToDoRepository : IToDoRepository
+    public class ToDoInMemoryRepository : IToDoRepository
     {
         private readonly ToDo[] _todos;
         private int _count;
 
-        public ToDoRepository()
+        public ToDoInMemoryRepository()
         {
             _todos = new ToDo[128];
             _count = 0;            

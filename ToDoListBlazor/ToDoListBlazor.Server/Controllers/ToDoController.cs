@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
-using ToDoListBlazor.Domain;
+using System.Threading.Tasks;
+using ToDoListBlazor.Domain.Abstractions;
 using ToDoListBlazor.Shared;
 
 namespace ToDoListBlazor.Server.Controllers
@@ -9,24 +11,34 @@ namespace ToDoListBlazor.Server.Controllers
     [Route("[controller]")]
     public class ToDoController : Controller
     {
-        private readonly IToDoRepository _toDoRepository;
-        public ToDoController(IToDoRepository toDoRepository)
+        
+        private readonly IRepository<ToDo> _toDoRepository;
+
+        public ToDoController(IRepository<ToDo> toDoRepository)
         {
             _toDoRepository = toDoRepository;
         }
 
         [HttpPost]
-        public ActionResult Post(ToDo newToDo)
+        public async Task<ActionResult> Post(ToDo newToDo)
         {
-            _toDoRepository.Create(newToDo);
+            try
+            {
+                var createdToDo = await _toDoRepository.Create(newToDo);
 
-            return Ok();
+                return Ok(createdToDo);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500);
+            }
+            
         }        
 
         [HttpGet]
-        public IEnumerable<ToDo> Get()
+        public async Task<IEnumerable<ToDo>> Get()
         {
-            return _toDoRepository.GetAll();
+            return await _toDoRepository.GetAll();
         }
     }
 }

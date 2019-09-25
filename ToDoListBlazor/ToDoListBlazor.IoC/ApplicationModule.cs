@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using ToDoListBlazor.Domain;
-using ToDoListBlazor.Infrastructure;
+using ToDoListBlazor.Domain.Abstractions;
+using ToDoListBlazor.Infrastructure.Repositories;
+using ToDoListBlazor.Shared;
 
 namespace ToDoListBlazor.IoC
 {
@@ -8,7 +9,8 @@ namespace ToDoListBlazor.IoC
     {
         public static void BindApplicationModules(IServiceCollection services)
         {
-            services.AddSingleton<IToDoRepository, ToDoRepository>();
+            //services.AddSingleton<IToDoRepository, ToDoInMemoryRepository>();
+            services.AddTransient<IRepository<ToDo>, EFRepository<ToDo>>();
         }
     }
 }

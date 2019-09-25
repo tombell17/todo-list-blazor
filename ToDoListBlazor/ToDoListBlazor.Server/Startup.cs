@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Linq;
-using ToDoListBlazor.Domain;
 using ToDoListBlazor.Infrastructure;
 using ToDoListBlazor.IoC;
 
@@ -16,15 +16,17 @@ namespace ToDoListBlazor.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddNewtonsoftJson();
+            services.AddMvc().AddNewtonsoftJson();            
             
-            ApplicationModule.BindApplicationModules(services);
-            
+            services.AddDbContext<EFDbContext>(options => options.UseInMemoryDatabase(databaseName: "ToDoDb"));
+
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" });
             });
+
+            ApplicationModule.BindApplicationModules(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
