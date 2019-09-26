@@ -1,14 +1,9 @@
 ﻿@page "/"
-@using ToDoListBlazor.Shared
+@inject TokenAuthenticationStateProvider TokenProvider
 @inject HttpClient Http
+@attribute [Authorize]
 
-<h1>To-Do List</h1>
-
-@if (todos == null || todos.Count() == 0)
-{
-    <p><em>Congratulations! You have nothing to do yet!</em></p>
-}
-else
+@if (todos != null && todos.Count() > 0)
 {
     <table class="table">
         <thead>
@@ -40,7 +35,8 @@ else
     {
         try
         {
-            todos = await Http.GetJsonAsync<IEnumerable<ToDo>>("ToDo");
+            var token = await TokenProvider.GetTokenAsync();
+            todos = await Http.GetJsonAsync<IEnumerable<ToDo>>("ToDo", new AuthenticationHeaderValue("Bearer", token));
         }
         catch (Exception ex)
         {

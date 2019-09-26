@@ -1,12 +1,15 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json.Serialization;
+using Microsoft.IdentityModel.Tokens;
 using System.Linq;
-using ToDoListBlazor.Server.Abstractions;
-using ToDoListBlazor.Server.Repositories;
+using System.Text;
+using ToDoListBlazor.Infrastructure;
+using ToDoListBlazor.IoC;
 
 namespace ToDoListBlazor.Server
 {
@@ -16,13 +19,30 @@ namespace ToDoListBlazor.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddNewtonsoftJson();
-            services.AddSingleton<IToDoRepository, ToDoRepository>();
+            services.AddMvc().AddNewtonsoftJson();            
+            
+            services.AddDbContext<EFDbContext>(options => options.UseInMemoryDatabase(databaseName: "ToDoDb"));
+
             services.AddResponseCompression(opts =>
             {
                 opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { "application/octet-stream" });
             });
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {                
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("123456")),
+                    ValidIssuer = "TokenIssuer",
+                    ValidAudience = "TokenAudience",
+                    ValidateIssuer = true,
+                    ValidateAudience = true                    
+                };
+            });
+
+            ApplicationModule.BindApplicationModules(services);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +60,9 @@ namespace ToDoListBlazor.Server
             app.UseClientSideBlazorFiles<Client.Startup>();
 
             app.UseRouting();
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

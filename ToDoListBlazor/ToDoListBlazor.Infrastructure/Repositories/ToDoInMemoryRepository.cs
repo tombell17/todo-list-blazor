@@ -1,17 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using ToDoListBlazor.Server.Abstractions;
+using ToDoListBlazor.Domain;
 using ToDoListBlazor.Shared;
 
-namespace ToDoListBlazor.Server.Repositories
+namespace ToDoListBlazor.Infrastructure
 {
-    public class ToDoRepository : IToDoRepository
+    public class ToDoInMemoryRepository : IToDoRepository
     {
         private readonly ToDo[] _todos;
         private int _count;
 
-        public ToDoRepository()
+        public ToDoInMemoryRepository()
         {
             _todos = new ToDo[128];
             _count = 0;            
