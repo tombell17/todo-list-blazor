@@ -1,10 +1,13 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Tokens;
 using System.Linq;
+using System.Text;
 using ToDoListBlazor.Infrastructure;
 using ToDoListBlazor.IoC;
 
@@ -26,6 +29,19 @@ namespace ToDoListBlazor.Server
                     new[] { "application/octet-stream" });
             });
 
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+            {                
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("123456")),
+                    ValidIssuer = "TokenIssuer",
+                    ValidAudience = "TokenAudience",
+                    ValidateIssuer = true,
+                    ValidateAudience = true                    
+                };
+            });
+
             ApplicationModule.BindApplicationModules(services);
         }
 
@@ -44,6 +60,9 @@ namespace ToDoListBlazor.Server
             app.UseClientSideBlazorFiles<Client.Startup>();
 
             app.UseRouting();
+            app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

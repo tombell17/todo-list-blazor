@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace ToDoListBlazor.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult> Post(ToDo newToDo)
         {
             try
@@ -36,6 +38,7 @@ namespace ToDoListBlazor.Server.Controllers
         }        
 
         [HttpGet]
+        [Authorize]
         public async Task<IEnumerable<ToDo>> Get()
         {
             return await _toDoRepository.GetAll();

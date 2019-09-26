@@ -1,8 +1,7 @@
 ﻿@page "/new"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
-@using ToDoListBlazor.Shared
-
+@attribute [Authorize]
 
 <h1>New To Do:</h1>
 <p>Fill the fields bellow to add a new To Do!</p>
@@ -23,12 +22,12 @@
     private ToDo newToDo = new ToDo();
 
     private async Task HandleValidSubmit()
-    {        
+    {
         newToDo.CreatedDateTime = DateTime.Now;
         newToDo.IsFinished = false;
-        
+
         await Http.PostJsonAsync("ToDo", newToDo);
-        
+
         NavigationManager.NavigateTo("/");
     }
 }
