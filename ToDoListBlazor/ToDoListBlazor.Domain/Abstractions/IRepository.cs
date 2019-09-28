@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 
 namespace ToDoListBlazor.Domain.Abstractions
 {
-    public interface IRepository<TData>
+    public interface IRepository<TEntity>
     {
-        Task<TData> Create(TData data);
-        Task<TData> Update(TData data);
-        Task Delete(TData data);
-        Task<TData> Get(string id);
-        Task<IEnumerable<TData>> GetAll();
+        Task<TEntity> Create(TEntity entity);
+        Task<TEntity> Update(TEntity entity);
+        Task Delete(TEntity entity);
+        Task<TEntity> Get(int id);
+        Task<IEnumerable<TEntity>> GetAll();
     }
 }

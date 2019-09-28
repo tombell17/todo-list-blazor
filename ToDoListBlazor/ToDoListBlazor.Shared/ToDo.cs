@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using ToDoListBlazor.Domain.Shared.Abstractions;
 
 namespace ToDoListBlazor.Shared
 {
-    public class ToDo
+    public class ToDo : IEntity
     {
         public int Id { get; set; }        
         [Required]

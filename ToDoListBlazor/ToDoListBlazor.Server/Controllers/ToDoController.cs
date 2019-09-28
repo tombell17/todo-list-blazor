@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using ToDoListBlazor.Domain.Abstractions;
+using ToDoListBlazor.Domain.Exceptions;
 using ToDoListBlazor.Shared;
 
 namespace ToDoListBlazor.Server.Controllers
@@ -22,7 +21,7 @@ namespace ToDoListBlazor.Server.Controllers
 
         [HttpPost]
         //[Authorize]
-        public async Task<ActionResult> Post(ToDo newToDo)
+        public async Task<IActionResult> Post(ToDo newToDo)
         {
             try
             {
@@ -30,7 +29,7 @@ namespace ToDoListBlazor.Server.Controllers
 
                 return Ok(createdToDo);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return StatusCode(500);
             }
@@ -39,9 +38,22 @@ namespace ToDoListBlazor.Server.Controllers
 
         [HttpGet]
         //[Authorize]
-        public async Task<IEnumerable<ToDo>> Get()
+        public async Task<IActionResult> Get()
         {
-            return await _toDoRepository.GetAll();
+            return Json(await _toDoRepository.GetAll());
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put(ToDo todo)
+        {
+            try
+            {
+                return Json(await _toDoRepository.Update(todo));
+            }
+            catch (EntityNotFoundException)
+            {
+                return NotFound();                
+            }                  
         }
     }
 }
