@@ -1,7 +1,7 @@
 ﻿@page "/"
 @inject TokenAuthenticationStateProvider TokenProvider
 @inject HttpClient Http
-@attribute [Authorize]
+@*@attribute [Authorize]*@
 
 @if (todos != null && todos.Count() > 0)
 {
@@ -17,11 +17,13 @@
         <tbody>
             @foreach (var todo in todos)
             {
+                int currentToDoId = todo.Id;
                 <tr>
                     <td>@todo.Title</td>
                     <td>@todo.Description</td>
                     <td>@todo.CreatedDateTime</td>
                     <td>@todo.IsFinished</td>
+                    @*<td><button id="update-todo-@currentToDoId" type="button" onclick="@(() => UpdateStatus(todo))">Update status</button></td>*@
                 </tr>
             }
         </tbody>
@@ -31,12 +33,18 @@
 @code {
     IEnumerable<ToDo> todos;
 
+    public void UpdateStatus(ToDo todo)
+    {
+        Console.WriteLine(todo.Id);
+    }
+
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            var token = await TokenProvider.GetTokenAsync();
-            todos = await Http.GetJsonAsync<IEnumerable<ToDo>>("ToDo", new AuthenticationHeaderValue("Bearer", token));
+            //var token = await TokenProvider.GetTokenAsync();
+            //todos = await Http.GetJsonAsync<IEnumerable<ToDo>>("ToDo", new AuthenticationHeaderValue("Bearer", token));
+            todos = await Http.GetJsonAsync<IEnumerable<ToDo>>("ToDo");
         }
         catch (Exception ex)
         {

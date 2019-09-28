@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListBlazor.Server", "To
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListBlazor.Client", "ToDoListBlazor.Client\ToDoListBlazor.Client.csproj", "{F0C4F0F4-3809-4328-A268-67F1E147ADC6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListBlazor.Domain.Shared", "ToDoListBlazor.Shared\ToDoListBlazor.Domain.Shared.csproj", "{C2EDBA0F-A330-4056-8754-01B204D7555F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListBlazor.Domain.Shared", "ToDoListBlazor.Domain.Shared\ToDoListBlazor.Domain.Shared.csproj", "{C2EDBA0F-A330-4056-8754-01B204D7555F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -13,10 +13,9 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Shared\ToDoListBlazor.Domain.Shared.csproj" />
+  <ItemGroup>    
     <ProjectReference Include="..\ToDoListBlazor.Domain\ToDoListBlazor.Domain.csproj" />
-    <ProjectReference Include="..\ToDoListBlazor.Shared\ToDoListBlazor.Domain.Shared.csproj" />
+    <ProjectReference Include="..\ToDoListBlazor.Domain.Shared\ToDoListBlazor.Domain.Shared.csproj" />
   </ItemGroup>
 
 </Project>

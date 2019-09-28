@@ -8,11 +8,10 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Shared\ToDoListBlazor.Domain.Shared.csproj" />
+  <ItemGroup>    
     <ProjectReference Include="..\ToDoListBlazor.Domain\ToDoListBlazor.Domain.csproj" />
     <ProjectReference Include="..\ToDoListBlazor.Infrastructure\ToDoListBlazor.Infrastructure.csproj" />
-    <ProjectReference Include="..\ToDoListBlazor.Shared\ToDoListBlazor.Domain.Shared.csproj" />
+    <ProjectReference Include="..\ToDoListBlazor.Domain.Shared\ToDoListBlazor.Domain.Shared.csproj" />
   </ItemGroup>
 
 </Project>
