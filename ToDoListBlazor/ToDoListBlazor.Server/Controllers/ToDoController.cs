@@ -21,7 +21,7 @@ namespace ToDoListBlazor.Server.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+        //[Authorize]
         public async Task<ActionResult> Post(ToDo newToDo)
         {
             try
@@ -38,7 +38,7 @@ namespace ToDoListBlazor.Server.Controllers
         }        
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<IEnumerable<ToDo>> Get()
         {
             return await _toDoRepository.GetAll();

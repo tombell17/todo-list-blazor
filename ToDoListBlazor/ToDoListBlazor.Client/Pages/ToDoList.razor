@@ -1,7 +1,7 @@
 ﻿@page "/"
 @inject TokenAuthenticationStateProvider TokenProvider
 @inject HttpClient Http
-@attribute [Authorize]
+@*@attribute [Authorize]*@
 
 @if (todos != null && todos.Count() > 0)
 {
@@ -35,8 +35,9 @@
     {
         try
         {
-            var token = await TokenProvider.GetTokenAsync();
-            todos = await Http.GetJsonAsync<IEnumerable<ToDo>>("ToDo", new AuthenticationHeaderValue("Bearer", token));
+            //var token = await TokenProvider.GetTokenAsync();
+            //todos = await Http.GetJsonAsync<IEnumerable<ToDo>>("ToDo", new AuthenticationHeaderValue("Bearer", token));
+            todos = await Http.GetJsonAsync<IEnumerable<ToDo>>("ToDo");
         }
         catch (Exception ex)
         {
