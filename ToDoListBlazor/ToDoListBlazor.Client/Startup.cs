@@ -1,5 +1,8 @@
+using Blazored.LocalStorage;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using ToDoListBlazor.Client.Services;
 using ToDoListBlazor.Client.Util;
 
 namespace ToDoListBlazor.Client
@@ -8,8 +11,10 @@ namespace ToDoListBlazor.Client
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddBlazoredLocalStorage();
             services.AddAuthorizationCore();
-            services.AddTokenAuthenticationStateProvider();
+            services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
+            services.AddScoped<IAuthService, AuthService>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)

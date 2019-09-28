@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
 using ToDoListBlazor.Domain.Abstractions;
@@ -7,6 +8,7 @@ using ToDoListBlazor.Shared;
 
 namespace ToDoListBlazor.Server.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class ToDoController : Controller
@@ -20,7 +22,7 @@ namespace ToDoListBlazor.Server.Controllers
         }
 
         [HttpPost]
-        //[Authorize]
+        
         public async Task<IActionResult> Post(ToDo newToDo)
         {
             try
@@ -37,7 +39,6 @@ namespace ToDoListBlazor.Server.Controllers
         }        
 
         [HttpGet]
-        //[Authorize]
         public async Task<IActionResult> Get()
         {
             return Json(await _toDoRepository.GetAll());

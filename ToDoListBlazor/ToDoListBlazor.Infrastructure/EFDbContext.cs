@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using ToDoListBlazor.Shared;
 
 namespace ToDoListBlazor.Infrastructure
 {
-    public class EFDbContext : DbContext
+    public class EFDbContext : IdentityDbContext
     {
         public EFDbContext(DbContextOptions<EFDbContext> options) 
                : base(options)

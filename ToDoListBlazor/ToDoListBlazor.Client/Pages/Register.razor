@@ -1,0 +1,66 @@
+﻿@page "/register"
+@inject IAuthService AuthService
+@inject NavigationManager NavigationManager
+
+<h1>Register</h1>
+
+@if (showErrors)
+{
+    <div class="alert alert-danger" role="alert">
+        @foreach (var error in errors)
+        {
+            <p>error</p>
+        }
+    </div>
+}
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Please enter your details</h5>
+        <EditForm Model="registerRequest" OnValidSubmit="HandleRegistration">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label for="email">Email address</label>
+                <InputText Id="email" Class="form-control" @bind-Value="registerRequest.Email" />
+                <ValidationMessage For="@(() => registerRequest.Email)" />
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <InputText Id="password" Class="form-control" @bind-Value="registerRequest.Password" />
+                <ValidationMessage For="@(() => registerRequest.Password)" />
+            </div>
+            <div class="form-group">
+                <label for="password">Confirm Password</label>
+                <InputText Id="password" Class="form-control" @bind-Value="registerRequest.ConfirmPassword" />
+                <ValidationMessage For="@(() => registerRequest.ConfirmPassword)" />
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+
+    private RegisterRequest registerRequest = new RegisterRequest();
+    private bool showErrors;
+    private IEnumerable<string> errors;
+
+    private async Task HandleRegistration()
+    {
+        showErrors = false;
+
+        var result = await AuthService.Register(registerRequest);
+
+        if (result.Successful)
+        {
+            NavigationManager.NavigateTo("/login");
+        }
+        else
+        {
+            errors = result.Errors;
+            showErrors = true;
+        }
+    }
+}

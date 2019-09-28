@@ -1,29 +1,32 @@
 ﻿@page "/new"
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
-@*@attribute [Authorize]*@
 
-<h1>New To Do:</h1>
-<p>Fill the fields bellow to add a new To Do!</p>
+<AuthorizeView Context="AuthContext">
+    <Authorized Context="AuthContext">
+        <h1>New To Do:</h1>
+        <p>Fill the fields bellow to add a new To Do!</p>
 
-<EditForm Model="@newToDo" OnValidSubmit="@HandleValidSubmit">
-    <DataAnnotationsValidator />
-    <ValidationSummary />
+        <EditForm Model="@newToDo" OnValidSubmit="@HandleValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
 
-    <p>
-        Title <InputText id="title" @bind-Value="@newToDo.Title" /> <br><br>
-        Description <InputText id="description" @bind-Value="@newToDo.Description" /><br>
-        Priority
-        <InputSelect id="priority" @bind-Value="@newToDo.Priority">
-            <option value=@Priority.Low>Low</option>
-            <option value=@Priority.Medium>Medium</option>
-            <option value=@Priority.High>High</option>
-        </InputSelect>
-        <br>
-    </p>
+            <p>
+                Title <InputText id="title" @bind-Value="@newToDo.Title" /> <br><br>
+                Description <InputText id="description" @bind-Value="@newToDo.Description" /><br>
+                Priority
+                <InputSelect id="priority" @bind-Value="@newToDo.Priority">
+                    <option value=@Priority.Low>Low</option>
+                    <option value=@Priority.Medium>Medium</option>
+                    <option value=@Priority.High>High</option>
+                </InputSelect>
+                <br>
+            </p>
 
-    <button type="submit">Create</button>
-</EditForm>
+            <button type="submit">Create</button>
+        </EditForm>
+    </Authorized>
+</AuthorizeView>
 
 @code {
     private ToDo newToDo = new ToDo();

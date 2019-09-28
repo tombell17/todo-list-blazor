@@ -8,8 +8,7 @@ namespace ToDoListBlazor.IoC
     public class ApplicationModule
     {
         public static void BindApplicationModules(IServiceCollection services)
-        {
-            //services.AddSingleton<IToDoRepository, ToDoInMemoryRepository>();
+        {            
             services.AddTransient<IRepository<ToDo>, EFRepository<ToDo>>();
         }
     }
