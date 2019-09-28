@@ -18,9 +18,8 @@
     <PackageReference Include="NETStandard.Library" Version="2.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Shared\ToDoListBlazor.Domain.Shared.csproj" />
-    <ProjectReference Include="..\ToDoListBlazor.Shared\ToDoListBlazor.Domain.Shared.csproj" />
+  <ItemGroup>    
+    <ProjectReference Include="..\ToDoListBlazor.Domain.Shared\ToDoListBlazor.Domain.Shared.csproj" />
   </ItemGroup>
 
 </Project>
