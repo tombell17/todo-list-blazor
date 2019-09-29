@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using ToDoListBlazor.Domain.Shared;
 using ToDoListBlazor.Domain.Shared.Abstractions;
 
 namespace ToDoListBlazor.Shared
@@ -17,5 +18,7 @@ namespace ToDoListBlazor.Shared
         public DateTime CreatedDateTime { get; set; }
         public DateTime FinishedDateTime { get; set; }
         public bool IsFinished { get; set; }
+        public UserViewModel CreatedBy { get; set; }        
+        public UserViewModel AssignedTo { get; set; }
     }
 }

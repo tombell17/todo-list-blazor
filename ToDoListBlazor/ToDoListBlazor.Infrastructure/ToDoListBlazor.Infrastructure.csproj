@@ -20,4 +20,8 @@
     <ProjectReference Include="..\ToDoListBlazor.Domain.Shared\ToDoListBlazor.Domain.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mappers\" />
+  </ItemGroup>
+
 </Project>

@@ -22,6 +22,12 @@
             <ValidationSummary />
 
             <div class="form-group">
+                <label for="name">Name</label>
+                <InputText Id="name" Class="form-control" @bind-Value="registerRequest.Name" />
+                <ValidationMessage For="@(() => registerRequest.Name)" />
+            </div>
+
+            <div class="form-group">
                 <label for="email">Email address</label>
                 <InputText Id="email" Class="form-control" @bind-Value="registerRequest.Email" />
                 <ValidationMessage For="@(() => registerRequest.Email)" />

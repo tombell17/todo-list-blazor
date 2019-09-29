@@ -13,6 +13,7 @@
                             <th>Description</th>
                             <th>Created</th>
                             <th>Completed</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -24,7 +25,10 @@
                                 <td>@todo.Description</td>
                                 <td>@todo.CreatedDateTime</td>
                                 <td>@todo.IsFinished</td>
-                                <td><button id="update-todo-@currentToDoId" type="button" @onclick="(async () => await UpdateStatus(todo))">Update status</button></td>
+                                <td>
+                                    <button id="update-todo-@currentToDoId" type="button" @onclick="(async () => await UpdateStatus(todo))">Update status</button>
+                                    <button id="delete-todo-@currentToDoId" type="button" @onclick="(async () => await DeleteToDo(todo))">Delete</button>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -35,7 +39,13 @@
 </AuthorizeView>
 
 @code {    
-    IEnumerable<ToDo> todos;
+    List<ToDo> todos;
+
+    public async Task DeleteToDo(ToDo todo)
+    {
+        await Http.SendJsonAsync(HttpMethod.Delete, "ToDo", todo);
+        todos.Remove(todo);
+    }
 
     public async Task UpdateStatus(ToDo todo)
     {
@@ -49,7 +59,7 @@
     {
         try
         {
-            todos = await Http.GetJsonAsync<IEnumerable<ToDo>>("ToDo");            
+            todos = (await Http.GetJsonAsync<IEnumerable<ToDo>>("ToDo")).ToList();
         }
         catch (Exception ex)
         {

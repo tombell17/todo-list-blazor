@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
 using ToDoListBlazor.Domain.Shared.UserAccount;
+using ToDoListBlazor.Infrastructure.Abstractions;
 
 namespace ToDoListBlazor.Server.Controllers
 {
@@ -11,44 +12,36 @@ namespace ToDoListBlazor.Server.Controllers
     public class UserAccountController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUserMapper _userMapper;
 
-        public UserAccountController(UserManager<IdentityUser> userManager)
+        public UserAccountController(UserManager<IdentityUser> userManager, IUserMapper userMapper)
         {
             _userManager = userManager;
+            _userMapper = userMapper;
         }
 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody]RegisterRequest request)
         {
-            var user = new IdentityUser
+            var user = _userMapper.MapIdentityUser(request);
+
+            var identityResult = await _userManager.CreateAsync(user, request.Password);
+
+            if (identityResult.Succeeded)
             {
-                UserName = request.Email,
-                Email = request.Email
+                return Ok(new Result { Successful = true });
+            }
+
+            return BadRequest(GenerateBadRequestResult(identityResult));            
+        }   
+        
+        private Result GenerateBadRequestResult(IdentityResult identityResult)
+        {
+            return new Result
+            {
+                Successful = false,
+                Errors = identityResult.Errors.Select(x => x.Description)
             };
-            try
-            {
-                var result = await _userManager.CreateAsync(user, request.Password);
-
-                if (!result.Succeeded)
-                {
-                    return BadRequest(new Result
-                    {
-                        Successful = false,
-                        Errors = result.Errors.Select(x => x.Description)
-                    });
-                }
-
-                return Ok(new Result
-                {
-                    Successful = true
-                });
-            }
-            catch (System.Exception ex)
-            {
-
-                throw ex;
-            }
-
         }
     }
 }

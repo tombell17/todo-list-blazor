@@ -56,5 +56,12 @@ namespace ToDoListBlazor.Server.Controllers
                 return NotFound();                
             }                  
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(ToDo todo)
+        {
+            await _toDoRepository.Delete(todo);
+            return Ok();
+        }
     }
 }
