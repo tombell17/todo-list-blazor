@@ -25,9 +25,16 @@ namespace ToDoListBlazor.Server.Controllers
         
         public async Task<IActionResult> Post(ToDoViewModel newToDo)
         {
-            ToDoViewModel createdToDo = await _toDoService.Create(newToDo);
+            try
+            {
+                ToDoViewModel createdToDo = await _toDoService.Create(newToDo);
 
-            return Ok(createdToDo);
+                return Ok(createdToDo);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }            
         }        
 
         [HttpGet]

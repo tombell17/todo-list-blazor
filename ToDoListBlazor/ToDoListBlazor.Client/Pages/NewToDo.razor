@@ -43,6 +43,7 @@
     private ToDoViewModel newToDo = new ToDoViewModel();
     private int assignedUserId = 0;
     private List<UserViewModel> users;
+    [CascadingParameter] Task<AuthenticationState> authenticationStateTask { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -59,12 +60,13 @@
 
     private async Task HandleValidSubmit()
     {
-
+        var authState = await authenticationStateTask;
+        var user = authState.User;
 
         newToDo.CreatedDateTime = DateTime.Now;
         newToDo.IsFinished = false;
-        newToDo.AssignedTo = users.First(x => x.Id == assignedUserId);
-        //newToDo.CreatedBy = users.First(x => x.)
+        newToDo.AssignedtoUserId = users.First(x => x.Id == assignedUserId).UserAccountId;
+        newToDo.CreatedByUserId = users.First(x => x.Email == user.Identity.Name).UserAccountId;
 
         await Http.PostJsonAsync("ToDo", newToDo);
 

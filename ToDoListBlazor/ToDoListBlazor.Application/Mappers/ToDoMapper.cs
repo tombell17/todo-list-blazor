@@ -21,14 +21,16 @@ namespace ToDoListBlazor.Application.Mappers
             return new ToDoViewModel
             {
                 Id = toDo.EntityId,
-                Title = toDo.Title,                               
+                Title = toDo.Title,
                 Priority = toDo.Priority,
                 IsFinished = toDo.IsFinished,
-                Description = toDo.Description,                
+                Description = toDo.Description,
                 CreatedDateTime = toDo.CreatedDateTime,
-                FinishedDateTime = toDo.FinishedDateTime,                
-                CreatedBy = _userMapper.Map(toDo.CreatedBy),
-                AssignedTo = _userMapper.Map(toDo.AssignedTo)                                
+                FinishedDateTime = toDo.FinishedDateTime,
+                AssignedtoUserId = toDo.AssignedtoUserId,
+                CreatedByUserId = toDo.CreatedByUserId,
+                CreatedBy = toDo.CreatedBy != null ? _userMapper.Map(toDo.CreatedBy) : null,
+                AssignedTo = toDo.AssignedTo != null ? _userMapper.Map(toDo.AssignedTo) : null
             };
         }
 
@@ -43,8 +45,10 @@ namespace ToDoListBlazor.Application.Mappers
                 Description = toDo.Description,
                 CreatedDateTime = toDo.CreatedDateTime,
                 FinishedDateTime = toDo.FinishedDateTime,
-                CreatedBy = _userMapper.Map(toDo.CreatedBy),
-                AssignedTo = _userMapper.Map(toDo.AssignedTo)
+                AssignedtoUserId = toDo.AssignedtoUserId,
+                CreatedByUserId = toDo.CreatedByUserId,
+                CreatedBy = toDo.CreatedBy != null ? _userMapper.Map(toDo.CreatedBy) : null,
+                AssignedTo = toDo.AssignedTo != null ? _userMapper.Map(toDo.AssignedTo) : null
             };
         }
     }

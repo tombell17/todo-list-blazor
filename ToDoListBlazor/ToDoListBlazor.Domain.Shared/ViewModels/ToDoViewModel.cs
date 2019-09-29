@@ -19,6 +19,8 @@ namespace ToDoListBlazor.Domain.Shared.ViewModels
         public DateTime CreatedDateTime { get; set; }
         public DateTime FinishedDateTime { get; set; }
         public bool IsFinished { get; set; }
+        public string CreatedByUserId { get; set; }
+        public string AssignedtoUserId { get; set; }
         public UserViewModel CreatedBy { get; set; }        
         public UserViewModel AssignedTo { get; set; }
     }
