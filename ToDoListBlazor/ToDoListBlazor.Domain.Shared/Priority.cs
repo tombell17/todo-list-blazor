@@ -1,4 +1,4 @@
-﻿namespace ToDoListBlazor.Shared
+﻿namespace ToDoListBlazor.Domain.Shared
 {
     public enum Priority
     {

@@ -20,6 +20,17 @@
                     <option value=@Priority.Medium>Medium</option>
                     <option value=@Priority.High>High</option>
                 </InputSelect>
+                Assign to
+                <InputSelect id="priority" @bind-Value="@assignedUserId">
+                    @if (users != null && users.Count() > 0)
+                    {
+                        @foreach (var user in users)
+                        {
+                            <option value=@user.Id>@user.Name</option>
+                        }
+                    }
+
+                </InputSelect>
                 <br>
             </p>
 
@@ -29,12 +40,31 @@
 </AuthorizeView>
 
 @code {
-    private ToDo newToDo = new ToDo();
+    private ToDoViewModel newToDo = new ToDoViewModel();
+    private int assignedUserId = 0;
+    private List<UserViewModel> users;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            users = (await Http.GetJsonAsync<IEnumerable<UserViewModel>>("User")).ToList();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+    }
 
     private async Task HandleValidSubmit()
     {
+
+
         newToDo.CreatedDateTime = DateTime.Now;
         newToDo.IsFinished = false;
+        newToDo.AssignedTo = users.First(x => x.Id == assignedUserId);
+        //newToDo.CreatedBy = users.First(x => x.)
 
         await Http.PostJsonAsync("ToDo", newToDo);
 

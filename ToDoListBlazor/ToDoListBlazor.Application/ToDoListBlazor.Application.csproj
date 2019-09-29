@@ -10,8 +10,4 @@
     <ProjectReference Include="..\ToDoListBlazor.Infrastructure\ToDoListBlazor.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Abstractions\" />
-  </ItemGroup>
-
 </Project>

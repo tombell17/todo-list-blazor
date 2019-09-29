@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq;
 using System.Text;
+using ToDoListBlazor.Domain.Entities;
 using ToDoListBlazor.Infrastructure;
 using ToDoListBlazor.IoC;
 
@@ -32,7 +33,7 @@ namespace ToDoListBlazor.Server
             
             services.AddDbContext<EFDbContext>(options => options.UseInMemoryDatabase(databaseName: "ToDoDb"));
             
-            services.AddDefaultIdentity<IdentityUser>(options =>
+            services.AddDefaultIdentity<User>(options =>
             {
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;

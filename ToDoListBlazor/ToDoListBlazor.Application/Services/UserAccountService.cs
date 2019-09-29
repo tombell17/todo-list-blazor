@@ -2,34 +2,27 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ToDoListBlazor.Domain.Abstractions;
-using ToDoListBlazor.Domain.Shared;
+using ToDoListBlazor.Domain.Entities;
 using ToDoListBlazor.Domain.Shared.UserAccount;
-using ToDoListBlazor.Infrastructure.Abstractions;
 
 namespace ToDoListBlazor.Application.Services
 {
     public class UserAccountService : IUserAccountService
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<User> _userManager;
         private readonly IUserMapper _userMapper;
-        private readonly IRepository<User> _userRepository;
 
-        public UserAccountService(UserManager<IdentityUser> userManager, IUserMapper userMapper, IRepository<User> userRepository)
+        public UserAccountService(UserManager<User> userManager, IUserMapper userMapper)
         {
             _userManager = userManager;
             _userMapper = userMapper;
-            _userRepository = userRepository;
         }
 
         public async Task<Result> RegisterAccount(RegisterRequest request)
-        {
-            IdentityUser identityUser = _userMapper.MapIdentityUser(request);
+        {            
+            User newUser = _userMapper.Map(request);
 
-            IdentityResult identityResult = await _userManager.CreateAsync(identityUser, request.Password);
-
-            User user = _userMapper.MapUser(identityUser);
-
-            await _userRepository.Create(user);
+            IdentityResult identityResult = await _userManager.CreateAsync(newUser, request.Password);                        
 
             return GenerateResult(identityResult);
         }       

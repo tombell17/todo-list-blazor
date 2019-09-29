@@ -9,6 +9,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using ToDoListBlazor.Domain.Entities;
 using ToDoListBlazor.Domain.Shared.UserAccount;
 
 namespace ToDoListBlazor.Server.Controllers
@@ -18,10 +19,10 @@ namespace ToDoListBlazor.Server.Controllers
     public class LoginController : ControllerBase
     {
         private readonly IConfiguration _configuration;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<User> _signInManager;
 
         public LoginController(IConfiguration configuration,
-                               SignInManager<IdentityUser> signInManager)
+                               SignInManager<User> signInManager)
         {
             _configuration = configuration;
             _signInManager = signInManager;

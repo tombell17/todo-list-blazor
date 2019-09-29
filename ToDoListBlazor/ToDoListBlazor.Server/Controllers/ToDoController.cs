@@ -4,7 +4,8 @@ using System;
 using System.Threading.Tasks;
 using ToDoListBlazor.Domain.Abstractions;
 using ToDoListBlazor.Domain.Exceptions;
-using ToDoListBlazor.Shared;
+using ToDoListBlazor.Domain.Shared;
+using ToDoListBlazor.Domain.Shared.ViewModels;
 
 namespace ToDoListBlazor.Server.Controllers
 {
@@ -13,43 +14,34 @@ namespace ToDoListBlazor.Server.Controllers
     [Route("[controller]")]
     public class ToDoController : Controller
     {
-        
-        private readonly IRepository<ToDo> _toDoRepository;
+        private readonly IToDoService _toDoService;
 
-        public ToDoController(IRepository<ToDo> toDoRepository)
+        public ToDoController(IToDoService toDoService)
         {
-            _toDoRepository = toDoRepository;
+            _toDoService = toDoService;
         }
 
         [HttpPost]
         
-        public async Task<IActionResult> Post(ToDo newToDo)
+        public async Task<IActionResult> Post(ToDoViewModel newToDo)
         {
-            try
-            {
-                var createdToDo = await _toDoRepository.Create(newToDo);
+            ToDoViewModel createdToDo = await _toDoService.Create(newToDo);
 
-                return Ok(createdToDo);
-            }
-            catch (Exception)
-            {
-                return StatusCode(500);
-            }
-            
+            return Ok(createdToDo);
         }        
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            return Json(await _toDoRepository.GetAll());
+            return Json(await _toDoService.GetAll());
         }
 
         [HttpPut]
-        public async Task<IActionResult> Put(ToDo todo)
+        public async Task<IActionResult> Put(ToDoViewModel todo)
         {
             try
             {
-                return Json(await _toDoRepository.Update(todo));
+                return Json(await _toDoService.Update(todo));
             }
             catch (EntityNotFoundException)
             {
@@ -58,9 +50,9 @@ namespace ToDoListBlazor.Server.Controllers
         }
 
         [HttpDelete]
-        public async Task<IActionResult> Delete(ToDo todo)
+        public async Task<IActionResult> Delete(ToDoViewModel todo)
         {
-            await _toDoRepository.Delete(todo);
+            await _toDoService.Delete(todo);
             return Ok();
         }
     }

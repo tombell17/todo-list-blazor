@@ -39,18 +39,18 @@
 </AuthorizeView>
 
 @code {    
-    List<ToDo> todos;
+    List<ToDoViewModel> todos;
 
-    public async Task DeleteToDo(ToDo todo)
+    public async Task DeleteToDo(ToDoViewModel todo)
     {
         await Http.SendJsonAsync(HttpMethod.Delete, "ToDo", todo);
         todos.Remove(todo);
     }
 
-    public async Task UpdateStatus(ToDo todo)
+    public async Task UpdateStatus(ToDoViewModel todo)
     {
         todo.IsFinished = !todo.IsFinished;
-        var updatedToDo = await Http.PutJsonAsync<ToDo>("ToDo", todo);
+        var updatedToDo = await Http.PutJsonAsync<ToDoViewModel>("ToDo", todo);
         var inmemoryToDo = todos.FirstOrDefault(x => x.Id == updatedToDo.Id);
         inmemoryToDo.IsFinished = updatedToDo.IsFinished;
     }
@@ -59,7 +59,7 @@
     {
         try
         {
-            todos = (await Http.GetJsonAsync<IEnumerable<ToDo>>("ToDo")).ToList();
+            todos = (await Http.GetJsonAsync<IEnumerable<ToDoViewModel>>("ToDo")).ToList();
         }
         catch (Exception ex)
         {

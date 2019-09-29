@@ -1,10 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ToDoListBlazor.Domain.Abstractions;
 using ToDoListBlazor.Domain.Exceptions;
-using ToDoListBlazor.Domain.Shared.Abstractions;
 
 namespace ToDoListBlazor.Infrastructure.Repositories
 {
@@ -27,7 +25,7 @@ namespace ToDoListBlazor.Infrastructure.Repositories
 
         public async Task Delete(TEntity entity)
         {
-            var dbEntity = await Get(entity.Id);
+            var dbEntity = await Get(entity.EntityId);
             _dbContext.Set<TEntity>().Remove(dbEntity);
             await _dbContext.SaveChangesAsync();
         }
@@ -36,7 +34,7 @@ namespace ToDoListBlazor.Infrastructure.Repositories
         {
             var entity = await _dbContext.Set<TEntity>()
                                          .AsNoTracking()
-                                         .FirstOrDefaultAsync(e => e.Id == id);
+                                         .FirstOrDefaultAsync(e => e.EntityId == id);
             ValidateFoundEntity(entity);
 
             return entity;
@@ -44,7 +42,7 @@ namespace ToDoListBlazor.Infrastructure.Repositories
 
         public async Task<IEnumerable<TEntity>> GetAll()
         {
-            return await _dbContext.Set<TEntity>()
+            return await _dbContext.Set<TEntity>()                                   
                                    .ToListAsync();            
         }
 

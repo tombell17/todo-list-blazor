@@ -1,17 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
+using ToDoListBlazor.Domain.Abstractions;
 
 namespace ToDoListBlazor.Server.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
+    [Route("[controller]")]
     [ApiController]
     public class UserController : Controller
     {
-        //[HttpGet]
-        //public async Task<IActionResult> Get()
-        //{
-        //    return Json(await _toDoRepository.GetAll());
-        //}
+        private readonly IUserService _userService;
+
+        public UserController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Json(await _userService.GetAll());
+        }
     }
 }

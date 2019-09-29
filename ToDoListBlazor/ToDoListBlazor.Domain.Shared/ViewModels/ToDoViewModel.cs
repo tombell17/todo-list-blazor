@@ -1,24 +1,25 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
-using ToDoListBlazor.Domain.Shared;
-using ToDoListBlazor.Domain.Shared.Abstractions;
 
-namespace ToDoListBlazor.Shared
+namespace ToDoListBlazor.Domain.Shared.ViewModels
 {
-    public class ToDo : IEntity
+    public class ToDoViewModel
     {
         public int Id { get; set; }        
+        
         [Required]
         [StringLength(32)]
         public string Title { get; set; }       
+        
         [StringLength(500)]
         public string Description { get; set; }
+        
         [Required]
         public Priority Priority { get; set; }
         public DateTime CreatedDateTime { get; set; }
         public DateTime FinishedDateTime { get; set; }
         public bool IsFinished { get; set; }
-        public User CreatedBy { get; set; }        
-        public User AssignedTo { get; set; }
+        public UserViewModel CreatedBy { get; set; }        
+        public UserViewModel AssignedTo { get; set; }
     }
 }
