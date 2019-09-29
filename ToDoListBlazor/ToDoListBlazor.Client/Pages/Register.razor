@@ -2,7 +2,7 @@
 @inject IAuthService AuthService
 @inject NavigationManager NavigationManager
 
-<h1>Register</h1>
+<h1>Sign Up</h1>
 
 @if (showErrors)
 {
@@ -14,36 +14,37 @@
     </div>
 }
 
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">Please enter your details</h5>
-        <EditForm Model="registerRequest" OnValidSubmit="HandleRegistration">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
+<div class="col-md-6">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Please enter your details</h5>
+            <EditForm Model="registerRequest" OnValidSubmit="HandleRegistration">
+                <DataAnnotationsValidator />                
 
-            <div class="form-group">
-                <label for="name">Name</label>
-                <InputText Id="name" Class="form-control" @bind-Value="registerRequest.Name" />
-                <ValidationMessage For="@(() => registerRequest.Name)" />
-            </div>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <InputText Id="name" Class="form-control" @bind-Value="registerRequest.Name" />
+                    <ValidationMessage For="@(() => registerRequest.Name)" />
+                </div>
 
-            <div class="form-group">
-                <label for="email">Email address</label>
-                <InputText Id="email" Class="form-control" @bind-Value="registerRequest.Email" />
-                <ValidationMessage For="@(() => registerRequest.Email)" />
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <InputText Id="password" Class="form-control" @bind-Value="registerRequest.Password" />
-                <ValidationMessage For="@(() => registerRequest.Password)" />
-            </div>
-            <div class="form-group">
-                <label for="password">Confirm Password</label>
-                <InputText Id="password" Class="form-control" @bind-Value="registerRequest.ConfirmPassword" />
-                <ValidationMessage For="@(() => registerRequest.ConfirmPassword)" />
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </EditForm>
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <InputText Id="email" Class="form-control" @bind-Value="registerRequest.Email" />
+                    <ValidationMessage For="@(() => registerRequest.Email)" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <InputText Id="password" type="password" Class="form-control" @bind-Value="registerRequest.Password" />
+                    <ValidationMessage For="@(() => registerRequest.Password)" />
+                </div>
+                <div class="form-group">
+                    <label for="password">Confirm Password</label>
+                    <InputText Id="password" type="password" Class="form-control" @bind-Value="registerRequest.ConfirmPassword" />
+                    <ValidationMessage For="@(() => registerRequest.ConfirmPassword)" />
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </EditForm>
+        </div>
     </div>
 </div>
 
