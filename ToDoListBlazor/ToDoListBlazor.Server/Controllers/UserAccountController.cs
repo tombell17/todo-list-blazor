@@ -1,9 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using ToDoListBlazor.Domain.Abstractions;
 using ToDoListBlazor.Domain.Shared.UserAccount;
-using ToDoListBlazor.Infrastructure.Abstractions;
 
 namespace ToDoListBlazor.Server.Controllers
 {
@@ -11,37 +9,25 @@ namespace ToDoListBlazor.Server.Controllers
     [ApiController]
     public class UserAccountController : ControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly IUserMapper _userMapper;
+        private readonly IUserAccountService _userAccountService;
 
-        public UserAccountController(UserManager<IdentityUser> userManager, IUserMapper userMapper)
+        public UserAccountController(IUserAccountService userAccountService)
         {
-            _userManager = userManager;
-            _userMapper = userMapper;
+            _userAccountService = userAccountService;
         }
 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody]RegisterRequest request)
         {
-            var user = _userMapper.MapIdentityUser(request);
+            var registrationResult = await _userAccountService.RegisterAccount(request);            
 
-            var identityResult = await _userManager.CreateAsync(user, request.Password);
-
-            if (identityResult.Succeeded)
+            if (registrationResult.Successful)
             {
-                return Ok(new Result { Successful = true });
+                return Ok(registrationResult);
             }
 
-            return BadRequest(GenerateBadRequestResult(identityResult));            
-        }   
+            return BadRequest(registrationResult);            
+        }           
         
-        private Result GenerateBadRequestResult(IdentityResult identityResult)
-        {
-            return new Result
-            {
-                Successful = false,
-                Errors = identityResult.Errors.Select(x => x.Description)
-            };
-        }
     }
 }

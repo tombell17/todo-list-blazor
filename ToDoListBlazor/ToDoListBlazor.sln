@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListBlazor.Client", "To
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ToDoListBlazor.Domain.Shared", "ToDoListBlazor.Domain.Shared\ToDoListBlazor.Domain.Shared.csproj", "{C2EDBA0F-A330-4056-8754-01B204D7555F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToDoListBlazor.Application", "ToDoListBlazor.Application\ToDoListBlazor.Application.csproj", "{5A403B6F-59BD-40A1-9F32-986ABE9727F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{C2EDBA0F-A330-4056-8754-01B204D7555F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2EDBA0F-A330-4056-8754-01B204D7555F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2EDBA0F-A330-4056-8754-01B204D7555F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A403B6F-59BD-40A1-9F32-986ABE9727F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A403B6F-59BD-40A1-9F32-986ABE9727F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A403B6F-59BD-40A1-9F32-986ABE9727F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A403B6F-59BD-40A1-9F32-986ABE9727F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

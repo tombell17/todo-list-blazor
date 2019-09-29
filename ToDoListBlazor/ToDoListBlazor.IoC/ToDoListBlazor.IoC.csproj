@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>    
+    <ProjectReference Include="..\ToDoListBlazor.Application\ToDoListBlazor.Application.csproj" />    
     <ProjectReference Include="..\ToDoListBlazor.Domain\ToDoListBlazor.Domain.csproj" />
     <ProjectReference Include="..\ToDoListBlazor.Infrastructure\ToDoListBlazor.Infrastructure.csproj" />
     <ProjectReference Include="..\ToDoListBlazor.Domain.Shared\ToDoListBlazor.Domain.Shared.csproj" />
