@@ -24,7 +24,7 @@
                                 <td>@todo.Description</td>
                                 <td>@todo.CreatedDateTime</td>
                                 <td>@todo.IsFinished</td>
-                                <td><button id="update-todo-@currentToDoId" type="button" @onclick="(() => UpdateStatus(todo))">Update status</button></td>
+                                <td><button id="update-todo-@currentToDoId" type="button" @onclick="(async () => await UpdateStatus(todo))">Update status</button></td>
                             </tr>
                         }
                     </tbody>
@@ -37,9 +37,12 @@
 @code {    
     IEnumerable<ToDo> todos;
 
-    public void UpdateStatus(ToDo todo)
+    public async Task UpdateStatus(ToDo todo)
     {
-        Console.WriteLine(todo.Id);
+        todo.IsFinished = !todo.IsFinished;
+        var updatedToDo = await Http.PutJsonAsync<ToDo>("ToDo", todo);
+        var inmemoryToDo = todos.FirstOrDefault(x => x.Id == updatedToDo.Id);
+        inmemoryToDo.IsFinished = updatedToDo.IsFinished;
     }
 
     protected override async Task OnInitializedAsync()
