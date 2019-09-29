@@ -39,6 +39,12 @@
 </AuthorizeView>
 
 @code {    
+    [CascadingParameter]
+    Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    [Inject]
+    private HubConnectionBuilder _hubConnectionBuilder { get; set; }
+
     List<ToDoViewModel> todos;
 
     public async Task DeleteToDo(ToDoViewModel todo)
@@ -59,12 +65,39 @@
     {
         try
         {
-            todos = (await Http.GetJsonAsync<IEnumerable<ToDoViewModel>>("ToDo")).ToList();
+            var authState = await authenticationStateTask;
+
+            if (authState.User.Identity.IsAuthenticated)
+            {
+                var user = authState.User;
+
+                var signalRconnection = _hubConnectionBuilder.WithUrl("/todohub", opt =>
+                {
+                    opt.LogLevel = SignalRLogLevel.Trace;
+                    opt.Transport = HttpTransportType.WebSockets;
+                }).Build();
+
+                signalRconnection.On<string>("PushToDo", this.OnRecievedToDo);
+
+                await signalRconnection.StartAsync();
+
+                await signalRconnection.InvokeAsync("InitializeConnection", user.Identity.Name);
+
+                todos = (await Http.GetJsonAsync<IEnumerable<ToDoViewModel>>("ToDo")).ToList();
+            }
         }
         catch (Exception ex)
         {
             Console.WriteLine(ex.Message);
         }
-
     }
+
+    Task OnRecievedToDo(string todoViewModel)
+    {
+        var toDo = JsonConvert.DeserializeObject<ToDoViewModel>(todoViewModel);
+        todos.Add(toDo);
+        StateHasChanged();
+        return Task.CompletedTask;
+    }
+
 }

@@ -1,3 +1,4 @@
+using Blazor.Extensions;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Builder;
@@ -15,6 +16,7 @@ namespace ToDoListBlazor.Client
             services.AddAuthorizationCore();
             services.AddScoped<AuthenticationStateProvider, ApiAuthenticationStateProvider>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddTransient<HubConnectionBuilder>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)

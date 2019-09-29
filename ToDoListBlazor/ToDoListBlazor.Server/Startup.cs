@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -13,6 +12,7 @@ using System.Text;
 using ToDoListBlazor.Domain.Entities;
 using ToDoListBlazor.Infrastructure;
 using ToDoListBlazor.IoC;
+using ToDoListBlazor.Server.SignalR;
 
 namespace ToDoListBlazor.Server
 {
@@ -24,9 +24,7 @@ namespace ToDoListBlazor.Server
         {
             Configuration = configuration;
         }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+        
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddNewtonsoftJson();            
@@ -58,7 +56,7 @@ namespace ToDoListBlazor.Server
                     ValidateAudience = true                    
                 };
             });
-
+            services.AddSignalR();
             ApplicationModule.BindApplicationModules(services);
         }
 
@@ -85,7 +83,9 @@ namespace ToDoListBlazor.Server
             {
                 endpoints.MapDefaultControllerRoute();
                 endpoints.MapFallbackToClientSideBlazor<Client.Startup>("index.html");
+                endpoints.MapHub<ToDoHub>("/todohub");
             });
+            
         }
     }
 }

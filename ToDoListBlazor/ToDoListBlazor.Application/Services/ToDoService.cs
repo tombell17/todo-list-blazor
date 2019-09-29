@@ -23,7 +23,7 @@ namespace ToDoListBlazor.Application.Services
         {
             ToDo toDo = _todoMapper.Map(toDoViewModel);
             await _toDoRepository.Create(toDo);
-            return _todoMapper.Map(toDo);
+            return _todoMapper.Map(toDo);            
         }
 
         public async Task Delete(ToDoViewModel toDoViewModel)

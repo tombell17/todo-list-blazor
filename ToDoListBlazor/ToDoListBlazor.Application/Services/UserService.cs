@@ -18,6 +18,14 @@ namespace ToDoListBlazor.Application.Services
             _userMapper = userMapper;
         }
 
+        public async Task<UserViewModel> Get(string userId)
+        {
+            IEnumerable<User> userList = await _userRepository.GetAll();
+            User user = userList.First(user => user.Id == userId);
+
+            return _userMapper.Map(user);
+        }
+
         public async Task<IEnumerable<UserViewModel>> GetAll()
         {
             IEnumerable<User> users = await _userRepository.GetAll();            

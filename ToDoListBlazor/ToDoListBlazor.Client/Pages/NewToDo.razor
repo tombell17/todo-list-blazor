@@ -26,7 +26,7 @@
                     {
                         @foreach (var user in users)
                         {
-                            <option value=@user.Id>@user.Name</option>
+                            <option value=@user.UserAccountId>@user.Name</option>
                         }
                     }
 
@@ -41,7 +41,7 @@
 
 @code {
     private ToDoViewModel newToDo = new ToDoViewModel();
-    private int assignedUserId = 0;
+    private string assignedUserId;
     private List<UserViewModel> users;
     [CascadingParameter] Task<AuthenticationState> authenticationStateTask { get; set; }
 
@@ -65,7 +65,7 @@
 
         newToDo.CreatedDateTime = DateTime.Now;
         newToDo.IsFinished = false;
-        newToDo.AssignedtoUserId = users.First(x => x.Id == assignedUserId).UserAccountId;
+        newToDo.AssignedtoUserId = assignedUserId;
         newToDo.CreatedByUserId = users.First(x => x.Email == user.Identity.Name).UserAccountId;
 
         await Http.PostJsonAsync("ToDo", newToDo);

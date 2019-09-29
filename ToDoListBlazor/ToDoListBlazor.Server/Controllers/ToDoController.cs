@@ -1,11 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Threading.Tasks;
 using ToDoListBlazor.Domain.Abstractions;
 using ToDoListBlazor.Domain.Exceptions;
-using ToDoListBlazor.Domain.Shared;
 using ToDoListBlazor.Domain.Shared.ViewModels;
+using ToDoListBlazor.Server.SignalR;
 
 namespace ToDoListBlazor.Server.Controllers
 {
@@ -15,10 +16,14 @@ namespace ToDoListBlazor.Server.Controllers
     public class ToDoController : Controller
     {
         private readonly IToDoService _toDoService;
+        private readonly IHubContext<ToDoHub> _hubContext;
+        private readonly IUserService _userService;
 
-        public ToDoController(IToDoService toDoService)
+        public ToDoController(IToDoService toDoService, IHubContext<ToDoHub> hubContext, IUserService userService)
         {
             _toDoService = toDoService;
+            _hubContext = hubContext;
+            _userService = userService;
         }
 
         [HttpPost]
@@ -28,6 +33,8 @@ namespace ToDoListBlazor.Server.Controllers
             try
             {
                 ToDoViewModel createdToDo = await _toDoService.Create(newToDo);
+
+                await PushToDoToAssignedUser(createdToDo);
 
                 return Ok(createdToDo);
             }
@@ -61,6 +68,15 @@ namespace ToDoListBlazor.Server.Controllers
         {
             await _toDoService.Delete(todo);
             return Ok();
+        }      
+        
+        private async Task PushToDoToAssignedUser(ToDoViewModel toDoViewModel)
+        {
+            if(toDoViewModel.CreatedByUserId != toDoViewModel.AssignedtoUserId)
+            {
+                UserViewModel user = await _userService.Get(toDoViewModel.AssignedtoUserId);
+                await ToDoHub.PushToDo(toDoViewModel, user.Email, _hubContext);
+            }            
         }
     }
 }
